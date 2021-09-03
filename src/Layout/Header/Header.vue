@@ -1,6 +1,5 @@
 <template>
   <div>
-    <SystemBar></SystemBar>
     <v-app-bar color="white accent-4" dense dark>
       <img
         class="mr-3"
@@ -37,13 +36,9 @@
   </div>
 </template>
 <script>
-import SystemBar from "@/Layout/SystemBar.vue";
-
 export default {
   name: "Header",
-  components: {
-    SystemBar,
-  },
+  components: {},
 
   data: () => ({
     //

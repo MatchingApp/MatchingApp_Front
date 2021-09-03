@@ -3,6 +3,13 @@
     <br />
     <br />
     <v-card class="mx-auto" max-width="344">
+      <v-btn icon @click="deleteCandidat(candidate.id)" class="delete-account">
+        <v-icon large color="red darken-2"> mdi-account-remove </v-icon>
+      </v-btn>
+
+      <v-btn icon @click="editCandidat" class="edit-account">
+        <v-icon large color="green darken-2"> mdi-account-edit </v-icon>
+      </v-btn>
       <v-img
         src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
         height="100%"
@@ -49,11 +56,28 @@
   </div>
 </template>
 <script>
+import CandidatService from "../../../../data/CandidatService";
+
 export default {
   name: "CandidateDetails",
   props: ["candidate"],
   data: () => ({
     show: false,
   }),
+  methods: {
+    editCandidat() {
+      this.OpenModal();
+    },
+    deleteCandidat(id) {
+      CandidatService.DeleteCandidate(id)
+        .then((response) => {
+          console.log(response);
+          this.getCandidatesData();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
 };
 </script>

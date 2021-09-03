@@ -116,7 +116,7 @@
           v-for="candidate in candidates"
           :key="candidate.id"
           cols="12"
-          md="4"
+          md="12"
         >
           <CandidateDetails :candidate="candidate"></CandidateDetails>
         </v-col>
@@ -127,8 +127,8 @@
   </div>
 </template>
 <script>
-import CandidatService from "../data/CandidatService";
-import CandidateDetails from "@/components/CandidateDetails/CandidateDetails.vue";
+import CandidatService from "../../data/CandidatService";
+import CandidateDetails from "./components/CandidateDetails/CandidateDetails.vue";
 export default {
   name: "Home",
   components: {
@@ -226,8 +226,9 @@ export default {
         Skills: this.skills.join(" "),
         Bio: this.jobDescription,
         Address: this.location.join(" "),
+        MinExperience: this.range[0],
+        MaxExperience: this.range[1],
       });
-      console.log("data", data);
       CandidatService.getCandidate(data)
         .then((response) => {
           this.candidates = response.data;

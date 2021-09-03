@@ -3,6 +3,10 @@ import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify'
 import '@fortawesome/fontawesome'
+import VueEllipseProgress from 'vue-ellipse-progress';
+
+Vue.use(VueEllipseProgress);
+
 
 Vue.config.productionTip = false
 

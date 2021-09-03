@@ -190,7 +190,7 @@
   </v-container>
 </template>
 <script>
-import CandidatService from "../data/CandidatService";
+import CandidatService from "../../data/CandidatService";
 
 export default {
   data() {
