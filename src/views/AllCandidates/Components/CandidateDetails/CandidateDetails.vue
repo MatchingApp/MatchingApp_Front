@@ -57,27 +57,31 @@
 </template>
 <script>
 import CandidatService from "../../../../data/CandidatService";
+import "./CandidateDetails.css";
 
 export default {
   name: "CandidateDetails",
-  props: ["candidate"],
+  props: ["candidate", "showModal", "OpenModal", "selectCandidate"],
+  components: {},
   data: () => ({
     show: false,
   }),
   methods: {
     editCandidat() {
+      this.selectCandidate(this.candidate);
       this.OpenModal();
     },
     deleteCandidat(id) {
       CandidatService.DeleteCandidate(id)
         .then((response) => {
           console.log(response);
-          this.getCandidatesData();
         })
         .catch((e) => {
           console.log(e);
         });
+      location.reload();
     },
   },
 };
 </script>
+<style >

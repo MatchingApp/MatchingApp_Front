@@ -4,9 +4,15 @@ import router from './router'
 import vuetify from './plugins/vuetify'
 import '@fortawesome/fontawesome'
 import VueEllipseProgress from 'vue-ellipse-progress';
+import 'vue-universal-modal/dist/index.css';
+
+// import 'vue-suggestion/dist/vue-suggestion.css';
+
+
+
+
 
 Vue.use(VueEllipseProgress);
-
 
 Vue.config.productionTip = false
 

@@ -8,6 +8,12 @@ class CandidatService {
   getCandidateByName(name) {
     return http.get("/api/candidates/byname/" + name);
   }
+
+  getSkills() {
+    return http.get("/api/candidates/skills/");
+  }
+
+
   getCandidate(data) {
     return http.post("/api/candidates/search", data);
   }
@@ -21,7 +27,7 @@ class CandidatService {
   }
 
   UpdateCandidate(data) {
-    return http.put("/api/candidates/updatecandidat", data)
+    return http.post("/api/candidates/updatecandidat", data)
   }
 
   DeleteCandidate(id) {

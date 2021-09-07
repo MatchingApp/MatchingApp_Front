@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <br />
     <p class="titre">Add a candidate</p>
     <v-card flat>
       <v-snackbar
@@ -46,14 +45,19 @@
               ></v-select>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-select
+              <v-combobox
                 v-model="form.skills"
                 :items="skills"
-                attach
+                filled
                 chips
-                label="Skills"
+                label="Select"
+                item-text="name"
+                item-value="name"
                 multiple
-              ></v-select>
+                clearable
+                deletable-chips
+                class="skills"
+              ></v-combobox>
             </v-col>
 
             <v-col cols="12" sm="6">
@@ -156,10 +160,8 @@
         <v-card-actions>
           <v-btn text @click="resetForm"> Cancel </v-btn>
           <v-spacer></v-spacer>
-          <v-btn :disabled="!formIsValid" text color="primary" type="submit">
-            <!-- <v-btn text color="primary" type="submit">  -->
-            Register
-          </v-btn>
+          <!-- <v-btn :disabled="!formIsValid" text color="primary" type="submit"> -->
+          <v-btn text color="primary" type="submit"> Register </v-btn>
         </v-card-actions>
       </v-form>
       <v-dialog v-model="terms" width="70%">
@@ -191,7 +193,7 @@
 </template>
 <script>
 import CandidatService from "../../data/CandidatService";
-
+import "./AddCandidate.css";
 export default {
   data() {
     const defaultForm = Object.freeze({
@@ -234,25 +236,7 @@ export default {
         "russe",
       ],
       skills: [
-        "html",
-        "js",
-        "asp.net",
-        "data analytics",
-        "angular",
-        "deep learning",
-        "R",
-        "Python",
-        "Java",
-        "vue.js",
-        "AI",
-        "data science",
-        "devops",
-        "security",
-        "react.js",
-        "spreadsheets",
-        "SQL",
-        "PHP",
-        "css",
+      
       ],
       conditions: false,
       content:
@@ -282,8 +266,22 @@ export default {
       );
     },
   },
+  created() {
+    this.getSkills();
+  },
 
   methods: {
+    getSkills() {
+      CandidatService.getSkills()
+        .then((response) => {
+          console.log("response", response);
+          this.skills = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
     resetForm() {
       this.form = Object.assign({}, this.defaultForm);
       this.$refs.form.reset();
@@ -325,5 +323,9 @@ export default {
   line-height: 1.2;
   letter-spacing: -0.6px;
   text-align: center;
+}
+.skills {
+  background-color: white;
+  height: 58px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <v-container class="bloc-modale" v-if="showModal" style="overflow: scroll">
-    <div class="overlay" v-on:click="OpenModal"></div>
+    <div class="overlay" @click="OpenModal()"></div>
     <div class="modale">
       <v-card flat>
         <br />
@@ -21,16 +21,17 @@
             <v-row>
               <v-col cols="12" sm="6">
                 <v-text-field
-                  v-model="form.first"
+                  v-model="selectedCandidate.first"
                   :rules="rules.name"
                   color="blue darken-2"
                   label="First name"
+                  :value="form.first"
                   required
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6">
                 <v-text-field
-                  v-model="form.last"
+                  v-model="selectedCandidate.last"
                   :rules="rules.name"
                   color="blue darken-2"
                   label="Last name"
@@ -39,7 +40,7 @@
               </v-col>
               <v-col cols="12" sm="6">
                 <v-select
-                  v-model="form.languages"
+                  v-model="selectedCandidate.languages"
                   :items="languages"
                   attach
                   chips
@@ -49,7 +50,7 @@
               </v-col>
               <v-col cols="12" sm="6">
                 <v-select
-                  v-model="form.skills"
+                  v-model="selectedCandidate.skills"
                   :items="skills"
                   attach
                   chips
@@ -60,7 +61,7 @@
 
               <v-col cols="12" sm="6">
                 <v-text-field
-                  v-model="form.address"
+                  v-model="selectedCandidate.address"
                   :rules="rules.address"
                   color="blue darken-2"
                   label="Address"
@@ -69,7 +70,7 @@
               </v-col>
               <v-col cols="12" sm="6">
                 <v-text-field
-                  v-model="form.email"
+                  v-model="selectedCandidate.email"
                   :rules="rules.email"
                   color="blue darken-2"
                   label="Email"
@@ -78,7 +79,7 @@
               </v-col>
               <v-col cols="12" sm="6">
                 <v-text-field
-                  v-model="form.PhoneNumber"
+                  v-model="selectedCandidate.phone"
                   :rules="rules.PhoneNumber"
                   color="blue darken-2"
                   label="Phone Number"
@@ -88,7 +89,7 @@
 
               <v-col cols="12" sm="6">
                 <v-select
-                  v-model="form.education"
+                  v-model="selectedCandidate.education"
                   :items="education"
                   :rules="rules.education"
                   color="pink"
@@ -99,7 +100,7 @@
 
               <v-col cols="12" sm="6">
                 <v-slider
-                  v-model="form.age"
+                  v-model="selectedCandidate.age"
                   color="orange"
                   label="Age"
                   hint="Be honest"
@@ -110,7 +111,7 @@
               </v-col>
               <v-col cols="12" sm="6">
                 <v-slider
-                  v-model="form.experience"
+                  v-model="selectedCandidate.experience"
                   color="orange"
                   label="Experience range"
                   hint="Be honest"
@@ -121,14 +122,14 @@
               </v-col>
               <v-col cols="12" sm="6">
                 <v-text-field
-                  v-model="form.title"
+                  v-model="selectedCandidate.title"
                   color="blue darken-2"
                   label="Title"
                   required
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-textarea v-model="form.bio" color="teal">
+                <v-textarea v-model="selectedCandidate.bio" color="teal">
                   <template v-slot:label>
                     <div>Bio <small>(optional)</small></div>
                   </template>
@@ -158,10 +159,8 @@
           <v-card-actions>
             <v-btn text @click="resetForm"> Cancel </v-btn>
             <v-spacer></v-spacer>
-            <v-btn :disabled="!formIsValid" text color="primary" type="submit">
-              <!-- <v-btn text color="primary" type="submit">  -->
-              Register
-            </v-btn>
+            <!-- <v-btn :disabled="!formIsValid" text color="primary" type="submit"> -->
+            <v-btn text color="primary" type="submit"> Update </v-btn>
           </v-card-actions>
         </v-form>
         <v-dialog v-model="terms" width="70%">
@@ -199,10 +198,14 @@ import CandidatService from "../../../data/CandidatService";
 
 export default {
   name: "UpdateCandidate",
-  props: ["showModal", "OpenModal"],
+  props: ["showModal", "OpenModal", "selectedCandidate", "getCandidatesData"],
+  beforeCreate() {
+    this.changeform();
+  },
+
   data() {
-    const defaultForm = Object.freeze({
-      first: "",
+    var defaultForm = Object.freeze({
+      first: "ramos",
       last: "",
       bio: "",
       address: "",
@@ -266,37 +269,32 @@ export default {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
       snackbar: false,
       terms: false,
-      defaultForm,
+      name: "this.selectedCandidate.name",
     };
   },
-
-  computed: {
-    formIsValid() {
-      return (
-        this.form.first &&
-        this.form.last &&
-        this.form.bio &&
-        this.form.address &&
-        this.form.email &&
-        this.form.PhoneNumber &&
-        this.form.education &&
-        this.form.skills &&
-        this.form.languages &&
-        this.form.age &&
-        this.form.experience &&
-        this.form.terms &&
-        this.form.title
-      );
-    },
-  },
-
   methods: {
+    changeform() {
+      this.form.first = this.selectedCandidate.name;
+      this.form.last = this.selectedCandidate.name;
+      this.form.bio = this.selectedCandidate.bio;
+      this.form.address = this.selectedCandidate.address;
+      this.form.email = this.selectedCandidate.email;
+      this.form.PhoneNumber = this.selectedCandidate.phone;
+      this.form.education = this.selectedCandidate.education;
+      this.form.skills = this.selectedCandidate.skills;
+      this.form.languages = this.selectedCandidate.languages;
+      this.form.age = this.selectedCandidate.age;
+      this.form.experience = this.selectedCandidate.age;
+      this.form.title = this.selectedCandidate.title;
+    },
     resetForm() {
       this.form = Object.assign({}, this.defaultForm);
       this.$refs.form.reset();
     },
     submit() {
+      this.changeform();
       var data = JSON.stringify({
+        id: this.selectedCandidate.id,
         name: this.form.first + " " + this.form.last,
         age: this.form.age,
         bio: this.form.bio,
@@ -308,18 +306,20 @@ export default {
         skills: this.form.skills.join(" "),
         title: this.form.title,
         photo: this.photo,
+        score: null,
       });
-      CandidatService.createCandidate(data)
+      CandidatService.UpdateCandidate(data)
         .then((response) => {
           console.log("response", response);
+          this.getCandidatesData();
           // this.candidates = response.data;
         })
         .catch((e) => {
           console.log(e);
         });
-
+      this.OpenModal();
       this.snackbar = true;
-      this.resetForm();
+      location.reload();
     },
   },
 };

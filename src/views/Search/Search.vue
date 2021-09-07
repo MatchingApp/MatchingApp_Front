@@ -81,6 +81,9 @@
                 label="Skills"
                 multiple
                 background-color="white"
+                filled
+                clearable
+                deletable-chips
               ></v-autocomplete>
             </v-col>
             <v-col cols="12" md="4">
@@ -140,42 +143,7 @@ export default {
       min: 0,
       max: 20,
       range: [0, 20],
-      items: [
-        "css",
-        "html",
-        "js",
-        "asp.net",
-        "data analytics",
-        "angular",
-        "deep learning",
-        "R",
-        "Python",
-        "Java",
-        "vue.js",
-        "AI",
-        "data science",
-        "devops",
-        "security",
-        "react.js",
-        "spreadsheets",
-        "SQL",
-        "PHP",
-        " Good communication",
-        " customer service and relationship-building",
-        "Teamworking",
-        "Organisation and time management",
-        "MS",
-        "SQL",
-        "Oracle PL/SQL",
-        "Project Management",
-        "Execution",
-        "Cloud Computing",
-        "Accounting techniques",
-        "Calculations",
-        "Budgeting",
-        "Cash flow management",
-        "Tax planning",
-      ],
+      items: [],
       locations: [
         "Tunis",
         "Djerba",
@@ -205,8 +173,19 @@ export default {
   },
   created() {
     this.getCandidatesData();
+    this.getSkills();
   },
   methods: {
+    getSkills() {
+      CandidatService.getSkills()
+        .then((response) => {
+          console.log("response", response);
+          this.items = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
     getCandidatesData() {
       CandidatService.getAll()
         .then((response) => {

@@ -96,7 +96,7 @@ export default {
     show: false,
     color: "#20c339",
   }),
-  created() {
+  mounted() {
     this.getColor();
   },
   methods: {

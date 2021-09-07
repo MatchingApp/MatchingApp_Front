@@ -8,7 +8,7 @@
               <v-text-field
                 v-model="name"
                 :rules="nameRules"
-                label="Title"
+                label="Name"
                 required
                 outlined
                 background-color="white"
@@ -34,24 +34,31 @@
           md="4"
           class="account-card"
         >
-          <CandidateDetails :candidate="candidate"></CandidateDetails>
-
-          <UpdateCandidate
+          <CandidateDetails
             :showModal="showModal"
             :OpenModal="OpenModal"
-          ></UpdateCandidate>
+            :candidate="candidate"
+            :selectCandidate="selectCandidate"
+          ></CandidateDetails>
         </v-col>
       </v-row>
       <br />
       <br />
     </div>
+
+    <UpdateCandidate
+      :showModal="showModal"
+      :OpenModal="OpenModal"
+      :selectedCandidate="selectedCandidate"
+      :getCandidatesData="getCandidatesData"
+    ></UpdateCandidate>
   </div>
 </template>
 <script>
 import CandidatService from "../../data/CandidatService";
 import CandidateDetails from "./Components/CandidateDetails/CandidateDetails.vue";
-
 import UpdateCandidate from "./Components/UpdateCandidate.vue";
+
 import "./AllCandidates.css";
 export default {
   name: "AllCandidates",
@@ -64,6 +71,7 @@ export default {
       showModal: false,
       candidates: [],
       name: null,
+      selectedCandidate: null,
     };
   },
   created() {
@@ -71,7 +79,17 @@ export default {
   },
   methods: {
     OpenModal() {
+      console.log(this.showModal);
       this.showModal = !this.showModal;
+    },
+    selectCandidate(candidate) {
+      candidate.skills = candidate.skills.split(" ");
+      candidate.languages = candidate.languages.split(" ");
+      candidate.first = candidate.name.split(" ", 1).join("");
+      candidate.last = candidate.name.split(" ");
+      candidate.last.splice(0, 1);
+      candidate.last = candidate.last.join(" ");
+      this.selectedCandidate = candidate;
     },
     getCandidatesData() {
       CandidatService.getAll()
