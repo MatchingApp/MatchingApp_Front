@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <br />
     <br />
     <v-card class="mx-auto" max-width="344">
@@ -11,7 +12,7 @@
         <v-icon large color="green darken-2"> mdi-account-edit </v-icon>
       </v-btn>
       <v-img
-        src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
+        src={faker.internet.avatar()}
         height="100%"
       ></v-img>
       <v-card-title> {{ candidate.name }}</v-card-title>
@@ -82,6 +83,12 @@ export default {
       location.reload();
     },
   },
+  created() {
+let ckeditor = document.createElement('script');    
+ckeditor.setAttribute('src',"faker.js");
+document.head.appendChild(ckeditor);
+
+}
 };
 </script>
 <style >
