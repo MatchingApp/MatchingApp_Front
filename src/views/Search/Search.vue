@@ -8,7 +8,6 @@
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="title"
-                :rules="nameRules"
                 label="Title"
                 required
                 outlined
@@ -19,7 +18,6 @@
             <v-col cols="12" md="8">
               <v-text-field
                 v-model="jobDescription"
-                :rules="nameRules"
                 label="Job Description"
                 required
                 outlined

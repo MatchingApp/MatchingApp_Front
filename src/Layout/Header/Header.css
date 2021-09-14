@@ -1,0 +1,11 @@
+.v-application a{
+    color: #ff9800 !important;
+}
+.item-navbar{
+    display: flex;
+    align-items: baseline;
+}
+
+.theme--dark.v-icon {
+    color: #8f807a !important;
+}

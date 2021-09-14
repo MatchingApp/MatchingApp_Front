@@ -1,5 +1,9 @@
 <template>
-  <v-container class="bloc-modale" v-if="showModal" style="overflow: scroll">
+  <v-container
+    class="bloc-modale UpdateCandidate"
+    v-if="showModal"
+    style="overflow: scroll"
+  >
     <div class="overlay" @click="OpenModal()"></div>
     <div class="modale">
       <v-card flat>
@@ -49,14 +53,19 @@
                 ></v-select>
               </v-col>
               <v-col cols="12" sm="6">
-                <v-select
+                <v-combobox
                   v-model="selectedCandidate.skills"
                   :items="skills"
-                  attach
+                  filled
                   chips
                   label="Skills"
+                  item-text="name"
+                  item-value="name"
                   multiple
-                ></v-select>
+                  clearable
+                  deletable-chips
+                  class="skills"
+                ></v-combobox>
               </v-col>
 
               <v-col cols="12" sm="6">
@@ -243,27 +252,7 @@ export default {
         "chinois",
         "russe",
       ],
-      skills: [
-        "html",
-        "js",
-        "asp.net",
-        "data analytics",
-        "angular",
-        "deep learning",
-        "R",
-        "Python",
-        "Java",
-        "vue.js",
-        "AI",
-        "data science",
-        "devops",
-        "security",
-        "react.js",
-        "spreadsheets",
-        "SQL",
-        "PHP",
-        "css",
-      ],
+      skills: [],
       conditions: false,
       content:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
@@ -272,10 +261,23 @@ export default {
       name: "this.selectedCandidate.name",
     };
   },
+  created() {
+    this.getSkills();
+  },
   methods: {
+    getSkills() {
+      CandidatService.getSkills()
+        .then((response) => {
+          console.log("response", response);
+          this.skills = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
     changeform() {
-      this.form.first = this.selectedCandidate.name;
-      this.form.last = this.selectedCandidate.name;
+      this.form.first = this.selectedCandidate.first;
+      this.form.last = this.selectedCandidate.last;
       this.form.bio = this.selectedCandidate.bio;
       this.form.address = this.selectedCandidate.address;
       this.form.email = this.selectedCandidate.email;
@@ -335,5 +337,18 @@ export default {
 }
 .bloc-modale {
   background-color: aliceblue;
+}
+.v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)
+  > .v-input__control
+  > .v-input__slot,
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+  background-color: white;
+}
+.UpdateCandidate
+  .v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)
+  > .v-input__control
+  > .v-input__slot,
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+  background-color: none !important;
 }
 </style>

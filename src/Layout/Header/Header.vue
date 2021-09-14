@@ -8,11 +8,30 @@
       />
       <v-spacer></v-spacer>
       <router-link
+        :to="{ name: 'Besoin' }"
+        text-decoration="none"
+        style="margin: 10px"
+        class="item-navbar"
+      >
+        <v-icon> mdi-archive </v-icon>
+      </router-link>
+      <router-link
         :to="{ name: 'Search' }"
         text-decoration="none"
         style="margin: 10px"
+        class="item-navbar"
       >
-        <v-icon large color="orange darken-2"> mdi-magnify </v-icon>
+        <h2>search1</h2>
+        <v-icon> mdi-magnify </v-icon>
+      </router-link>
+      <router-link
+        :to="{ name: 'Needs' }"
+        text-decoration="none"
+        style="margin: 10px"
+        class="item-navbar"
+      >
+        <h2>search2</h2>
+        <v-icon> mdi-magnify </v-icon>
       </router-link>
 
       <router-link
@@ -36,6 +55,7 @@
   </div>
 </template>
 <script>
+import "./Header.css";
 export default {
   name: "Header",
   components: {},

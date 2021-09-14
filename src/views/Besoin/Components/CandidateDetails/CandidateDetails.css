@@ -1,0 +1,14 @@
+.progress-circle{
+  position: absolute;
+  top: 7px;
+  right: 12px;
+}
+.v-card__actions{
+  position: absolute;
+}
+.v-card__text{
+  margin-top: 18px;
+}
+.theme--light.v-divider{
+  margin-top: 12px;
+}
