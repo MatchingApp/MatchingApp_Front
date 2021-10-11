@@ -28,7 +28,7 @@ export default {
   components: {
     CandidateDetails,
   },
-  props: ["showModal", "OpenModal"],
+  props: ["showModal", "OpenModal", "candidates"],
 
   data() {
     var defaultForm = Object.freeze({
@@ -77,54 +77,6 @@ export default {
       snackbar: false,
       terms: false,
       name: "this.selectedCandidate.name",
-
-      candidates: [
-        {
-          id: "21be1251-138f-429f-b405-57b8d04499b7",
-          name: "Ramez Ben Aribia",
-          age: 21,
-          bio: "learning",
-          phone: 20400417,
-          address: "Tunisia",
-          languages: "arabe français anglais",
-          experience: 3,
-          education: "master degree",
-          skills: "html js asp.net angular Python Java vue.js PHP SQL css",
-          title: "Student",
-          photo: null,
-          score: 75.35,
-        },
-        {
-          id: "13e3da86-1e2e-4281-99ad-c0b04471eb77",
-          name: "Ferid Chebbi",
-          age: 23,
-          bio: "Manager",
-          phone: 20400417,
-          address: "Tunisia",
-          languages: "arabe français anglais",
-          experience: 12,
-          education: "engineering degree",
-          skills: "angular deep learning R Python Java security devops",
-          title: "Manager",
-          photo: null,
-          score: 68.58,
-        },
-        {
-          id: "5837d02f-53d3-4fa0-b2cb-962951508e75",
-          name: "Mahdi Hamdi",
-          age: 21,
-          bio: "Software engineer",
-          phone: 0,
-          address: "tunis",
-          languages: "arabic english frensh",
-          experience: 3,
-          education: "Master",
-          skills: "js",
-          title: "Network Engineer",
-          photo: null,
-          score: 56.21,
-        },
-      ],
     };
   },
   created() {

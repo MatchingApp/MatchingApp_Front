@@ -21,16 +21,7 @@
         style="margin: 10px"
         class="item-navbar"
       >
-        <h2>search1</h2>
-        <v-icon> mdi-magnify </v-icon>
-      </router-link>
-      <router-link
-        :to="{ name: 'Needs' }"
-        text-decoration="none"
-        style="margin: 10px"
-        class="item-navbar"
-      >
-        <h2>search2</h2>
+        <h2>search</h2>
         <v-icon> mdi-magnify </v-icon>
       </router-link>
 

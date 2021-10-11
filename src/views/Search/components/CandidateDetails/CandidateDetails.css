@@ -12,3 +12,6 @@
 .theme--light.v-divider{
     margin-top: 12px;
 }
+.v-card__text{
+    text-align: left;
+}

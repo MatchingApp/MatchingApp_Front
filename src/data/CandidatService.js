@@ -13,6 +13,9 @@ class CandidatService {
     return http.get("/api/candidates/skills/");
   }
 
+  getPosts() {
+    return http.get("/api/candidates/posts/");
+  }
 
   getCandidate(data) {
     return http.post("/api/candidates/search", data);

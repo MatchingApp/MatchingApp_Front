@@ -169,7 +169,7 @@
                           v-if="hover"
                           class=""
                           outlined
-                          @click="OpenModal()"
+                          @click="setSelectedCategory(categorie)"
                           >VIEW Candidates</v-btn
                         >
                       </div>
@@ -179,7 +179,7 @@
                     <h4 class="category-text-candidates">
                       Number of Candidates
                     </h4>
-                    {{ categorie.requiredExperience }}
+                    {{ categorie.candidats.length }}
                   </v-card-text>
                 </v-card>
               </v-hover>
@@ -205,6 +205,7 @@
     <CandidatePopUp
       :showModal="showModal"
       :OpenModal="OpenModal"
+      :candidates="candidates"
     ></CandidatePopUp>
   </div>
 </template>
@@ -230,54 +231,8 @@ export default {
   },
   data: () => ({
     showModal: false,
-
-    candidates: [
-      {
-        id: "21be1251-138f-429f-b405-57b8d04499b7",
-        name: "Ramez Ben Aribia",
-        age: 21,
-        bio: "learning",
-        phone: 20400417,
-        address: "Tunisia",
-        languages: "arabe français anglais",
-        experience: 3,
-        education: "master degree",
-        skills: "html js asp.net angular Python Java vue.js PHP SQL css",
-        title: "Student",
-        photo: null,
-        score: null,
-      },
-      {
-        id: "13e3da86-1e2e-4281-99ad-c0b04471eb77",
-        name: "Ferid Chebbi",
-        age: 23,
-        bio: "Manager",
-        phone: 20400417,
-        address: "Tunisia",
-        languages: "arabe français anglais",
-        experience: 12,
-        education: "engineering degree",
-        skills: "angular deep learning R Python Java security devops",
-        title: "Manager",
-        photo: null,
-        score: null,
-      },
-      {
-        id: "5837d02f-53d3-4fa0-b2cb-962951508e75",
-        name: "Mahdi Hamdi",
-        age: 21,
-        bio: "Software engineer",
-        phone: 0,
-        address: "tunis",
-        languages: "arabic english frensh",
-        experience: 3,
-        education: "Master",
-        skills: "js",
-        title: "Network Engineer",
-        photo: null,
-        score: null,
-      },
-    ],
+    selectedCategory: null,
+    candidates: [],
 
     range: [0, 40],
     select: "Popularity",
@@ -324,11 +279,21 @@ export default {
   created() {
     this.getNeedsData();
     this.getSkills();
+    this.getPosts();
   },
   methods: {
     OpenModal() {
       console.log(this.showModal);
       this.showModal = !this.showModal;
+    },
+    setSelectedCategory(categorie) {
+      console.log("categorie");
+      console.log(categorie);
+      this.selectedCategory = categorie;
+      this.candidates = categorie.candidats;
+      console.log("candidatescandidates");
+      console.log(this.candidates);
+      this.OpenModal();
     },
     onCheckboxClicked: function (language) {
       this.selectdLanguages.push(language);
@@ -342,6 +307,30 @@ export default {
       CandidatService.getSkills()
         .then((response) => {
           this.skillsItems = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getPosts() {
+      CandidatService.getPosts()
+        .then((response) => {
+          console.log("response", response);
+          const childrens = response.data;
+          let items = [];
+          var id = 0;
+          childrens.forEach((children) => {
+            id++;
+            console.log({ id: id, name: children });
+            const test = { id: id, name: children };
+            items.push(test);
+          });
+          this.posts = [
+            {
+              name: "Posts",
+              children: items,
+            },
+          ];
         })
         .catch((e) => {
           console.log(e);
